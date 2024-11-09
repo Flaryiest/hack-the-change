@@ -31,7 +31,7 @@ def post():
 
 @app.route("/results", methods=["GET"])
 def results():
-    #do the ML thingy
+    database.conn
     pass
 
 @app.route("/login")
