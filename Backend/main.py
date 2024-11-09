@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from postgrelib import SimpleTable, Database
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
-import os
+import os, random
 from time import sleep
 import threading
 import serial_reader
@@ -22,6 +22,9 @@ database = Database(
 
 table = SimpleTable("user_data", database, key="id", item="feedback")
 table.create_table()
+'''
+for i in range(0, 10):
+    table.insert_data("".join([str(random.randint(0, 9)) for i in range(0, 10)]), {"feedback": ""})'''
 
 @app.route("/submit", methods=["POST"])
 def post():
