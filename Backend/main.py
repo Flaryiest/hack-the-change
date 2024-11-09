@@ -25,12 +25,17 @@ def post():
     id, feedback = request.json["id"], request.json["id"]
     if table.get_data(id):
         table.insert_data(id, {"feedback": feedback})
+        return jsonify({"result": True, "info": "Success!"})
     else:
-        return jsonify({"result": False, "info": "This government ID does not exist"})
+        return jsonify({"result": False, "info": "This government ID does not exist."})
 
 @app.route("/results", methods=["GET"])
 def results():
     #do the ML thingy
+    pass
+
+@app.route("/login")
+def login():
     pass
 
 if __name__ == "__main__":
