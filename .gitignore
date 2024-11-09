@@ -1,3 +1,5 @@
 .env
 Backend/async_test.py
 test.py
+Backend/test.txt
+Backend/__pycache__
