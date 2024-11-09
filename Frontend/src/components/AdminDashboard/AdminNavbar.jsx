@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 export default function DashboardNavbar() {
     return <nav className="navbar">
             <div className="navbar-left">
-                <div className="navbar-header"><Link to="dashboard">ChangePod</Link></div>
+                <div className="navbar-header"><Link to="admin">ChangePod Legislator</Link></div>
                 <ul className="navbar-left-links">
                     <li className="navbar-link"><Link className="navbar-left-link-text-" to="admin/feedback">Feedback</Link></li>
                     <li className="navbar-link"><Link className="navbar-left-link-text" to="admin/bills">Bills</Link></li>

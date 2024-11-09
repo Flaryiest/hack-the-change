@@ -1,6 +1,6 @@
 .navbar {
     display: flex;
-    min-height: 10dvh;
+    min-height: 64px;
     justify-content: space-between;
     align-items: center;
     padding: 0px 24px;
@@ -69,9 +69,10 @@
 
 
 
-@media only screen and (max-width: 512px) {
+@media only screen and (max-width: 1024px) {
     .navbar {
         justify-content: center;
         gap: 32px;
+        height: 120px;
     }
 }

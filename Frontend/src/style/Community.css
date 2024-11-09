@@ -1,0 +1,73 @@
+.community-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.community-section {
+    min-height: 200px;
+}
+
+.community-section h2 {
+    font-size: 2em;
+    font-weight: 700;
+    margin-bottom: 24px;
+    color: #333;
+}
+
+.community-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.community-card {
+    padding: 20px;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 1em;
+    color: #444;
+    transition: box-shadow 0.2s ease;
+    min-height: 250px;
+}
+
+.community-card h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.community-card p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+}
+
+.community-card:hover {
+    box-shadow: 0 6px 12px rgba(62, 62, 62, 0.15);
+}
+
+@media (max-width: 600px) {
+    .community-container {
+        padding: 10px;
+    }
+
+    .community-section h2 {
+        font-size: 1.5em;
+    }
+
+    .community-card {
+        font-size: 0.9em;
+    }
+
+    .community-card h3 {
+        font-size: 1.3em;
+    }
+
+    .community-card p {
+        font-size: 0.9em;
+    }
+}
