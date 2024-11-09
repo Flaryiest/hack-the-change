@@ -15,7 +15,7 @@ const CreateBill = () => {
   return (
     <div className="create-change-form-container">
       <form className="create-change-form" onSubmit={handleSubmit}>
-        <h2 className="create-change-form-title">Create Change</h2>
+        <h2 className="create-change-form-title">Create Bill</h2>
 
         <label htmlFor="title" className="create-change-form-label">Title</label>
         <input
