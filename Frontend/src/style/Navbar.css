@@ -1,0 +1,77 @@
+.navbar {
+    display: flex;
+    min-height: 10dvh;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 24px;
+    flex-wrap: wrap;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(199, 198, 198);
+    border-radius: 4px;
+}
+
+.navbar-header {
+    font-size: var(--sub-header-text-size);
+}
+
+.navbar-button {
+    background-color: var(--secondary-color);
+    color: var(--main-background-color);
+    border-radius: 12px;
+    padding-left: 1.4em;
+    padding-right: 1.4em;
+    font-weight: 500;
+    font-size: 14px;
+    height: 48px;
+}
+
+.navbar-left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+.navbar-left-links {
+    display: flex;
+    gap: 1.5em;
+    justify-content: center;
+    align-items: center;
+    height: var(--sub-header-text-size);
+    
+}
+
+.navbar-left-link-text {
+    font-size: 16px;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 2em;
+}
+
+.navbar-right-links {
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1em;
+}
+
+.navbar-right-link-text {
+    font-size: 16px;
+}
+
+.navbar-login :hover {
+    cursor: pointer;
+}
+
+
+
+@media only screen and (max-width: 512px) {
+    .navbar {
+        justify-content: center;
+        gap: 32px;
+    }
+}

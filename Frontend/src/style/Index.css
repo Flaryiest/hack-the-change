@@ -1,0 +1,99 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+:root {
+  font-family: "Poppins", "Roboto", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+  --main-background-color:#F2F3F4;
+  --main-text-color:#181818;
+  --secondary-color: #4262FF;
+  --tertiary-color: #FF9D48;
+
+  --sub-text-size: 0.75em;
+  --main-text-size: 1em;
+  --sub-header-text-size: 1.5em;
+  --header-text-size: 2em;
+
+  
+
+  background-color: var(--main-background-color);
+  color: var(--main-text-color);
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  margin: 0 auto;
+  padding: 0.5em 1em;
+  text-align: center;
+  width: 100vw;
+}
+
+a {
+  text-decoration: none;
+  color: var(--main-text-color);
+}
+
+button {
+  border: none;
+  color: var(--main-text-color);
+  background-color: var(--main-background-color);
+  font-family: "Poppins";
+  font-weight: 500;
+}
+button :hover {
+  cursor: pointer;
+}
