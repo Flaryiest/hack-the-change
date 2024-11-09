@@ -1,12 +1,12 @@
-
 .dashboard-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 32px;
     padding: 20px;
+    padding-top: 32px;
     max-width: 1200px;
     margin: auto;
-    font-family: Arial, sans-serif;
+    
   }
   
   .dashboard-section {
@@ -29,13 +29,13 @@
   
   .dashboard-card {
     padding: 15px;
-    background-color: #f5f5f5;
+    background-color: #fefefe;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-size: 0.9em;
     color: #444;
     transition: box-shadow 0.2s ease;
-    min-height: 80px;
+    min-height: 120px;
   }
   
   .dashboard-card:hover {

@@ -13,7 +13,7 @@ const Dashboard = () => {
       <div className="dashboard-divider" />
 
       <section className="dashboard-section">
-        <h2>Recent Change</h2>
+        <h2>Recent Changes</h2>
         <div className="dashboard-cards">
           <div className="dashboard-card">Recent item 1</div>
           <div className="dashboard-card">Recent item 2</div>
@@ -24,7 +24,7 @@ const Dashboard = () => {
       <div className="dashboard-divider" />
 
       <section className="dashboard-section">
-        <h2>Popular Change</h2>
+        <h2>Popular Changes</h2>
         <div className="dashboard-cards">
           <div className="dashboard-card">Popular item 1</div>
           <div className="dashboard-card">Popular item 2</div>

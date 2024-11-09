@@ -45,7 +45,7 @@ table {
 :root {
   font-family: "Poppins", "Roboto", Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-  --main-background-color:#F2F3F4;
+  --main-background-color:#fefefe;
   --main-text-color:#181818;
   --secondary-color: #4262FF;
   --tertiary-color: #FF9D48;
