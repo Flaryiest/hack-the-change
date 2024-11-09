@@ -1,16 +1,14 @@
 import serial
 
 # TODO: make functions that can be imported by another python program
-
-def init_serial(serial_port="COM3", serial_baudrate=9600, serial_timeout=None) {
+def init_serial(serial_port="COM3", serial_baudrate=9600, serial_timeout=None) :
     return serial.Serial(
         port = serial_port,
         baudrate = serial_baudrate,
         timeout = serial_timeout
         )
-}
 
-def get_user_id(ser, serial_message_len=9) {
+def get_user_id(ser, serial_message_len=9) :
     '''reads a single 9 byte input from serial and outputs it as a string. ser is a serial.serial object'''
 
     raw_input = b'' # set raw_input as a bytes
@@ -20,14 +18,11 @@ def get_user_id(ser, serial_message_len=9) {
 
     return raw_input.decode("utf-8")
 
-}
 
-def close_serial(ser) {
+def close_serial(ser) :
     '''closes ser as a serial object'''
     ser.close()
-}
-# testing code
-'''
+# testing code (should work the same as the definitions
 if __name__ == "__main__":
     ser = serial.Serial(
         port = "COM3",
@@ -44,6 +39,7 @@ if __name__ == "__main__":
     ser.close()
     
     # bytes are just integer arrays
+    '''
     message = "Python is fun"
     byte1 = bytes(message, "utf-8")
 
@@ -51,4 +47,4 @@ if __name__ == "__main__":
         print(f"{byte1[i]}")
         if (byte1[i] == 32):
             print("there is a space!!!")
-    '''
+            '''
