@@ -1,8 +1,6 @@
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
-from dotenv import load_dotenv
 from openai import OpenAI
-import json, os
 
 
 class Feedback:
@@ -35,7 +33,7 @@ class Feedback:
             result[chat_completion.choices[0].message.content] = feedback[:10]
 
         return result
-
+'''
 feedbacks = """The buses are often late and unreliable.
 The new recycling program is very effective
 The garbage collection is good
@@ -48,4 +46,4 @@ I always miss the bus
 """.split("\n")
 
 feedback = Feedback(api_key="")
-print(feedback.generate_feedback(feedbacks))
+print(feedback.generate_feedback(feedbacks))'''
