@@ -2,3 +2,5 @@ flask>=2.0.0
 gunicorn>=20.1.0
 postgrelib>=0.0.1
 psycopg2>=2.9.10
+python-dotenv>=1.0.1
+Flask-Cors>=5.0.0
