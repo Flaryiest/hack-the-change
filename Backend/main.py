@@ -3,6 +3,9 @@ from postgrelib import SimpleTable, Database
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 import os
+from time import sleep
+import threading
+import serial_reader
 
 load_dotenv()
 
@@ -37,9 +40,21 @@ def results():
 @app.route("/login")
 def login():
     pass
+'''def say_hello():
+    sleep(2)
+    print("Hello, world!")'''
+
+def serial_data_get():
+    ser = serial_reader.init_serial()
+    serial_reader.get_user_id(ser, 9)
+    serial_reader.close_serial(ser)
 
 if __name__ == "__main__":
+    #t1 = threading.Thread(target=say_hello, args=())
+    t1 = threading.Thread(target=serial_data_get, args=())
+    t1.start()
+
     app.run(host="127.0.0.1", port=3333)
 
-
+    t1.join()
 
