@@ -59,12 +59,16 @@ def get_cookies():
 @app.route("/user_data", methods=["GET", "POST"])
 def get_user_data():
     id = request.cookies.get('id')
+    data = request.json
     user_data = table.get_data(id)
+    
     if user_data:
         if request.method == "GET":
             return user_data
         else:
-            pass
+            data["admin"] = user_data["admin"]
+            table.insert_data(id, data)
+            return jsonify({"success": True})
     else:
         return jsonify({"success": False})
 
