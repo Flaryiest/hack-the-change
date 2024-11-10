@@ -18,7 +18,6 @@ latest_bill_changes = []
     {"title":"", "latest_feedback": ""},\
     {"title":"", "latest_feedback": ""}\
     ]'''
-l_b_c_index = 0
 
 database = Database(
     DB_HOST=os.getenv("DB_HOST"),
@@ -50,6 +49,10 @@ def submit_feedback():
     # this should be run along with submit bill
     # changes a user's feedback data
     # the bills that these are a part of are not stored ???
+    # INPUT
+        # {"id": "...", "feedback": "..."}
+    # OUTPUT
+        # {"result": True/False, "info": "..."}
     id, feedback = request.json["id"], request.json["feedback"]
 
     user_data = user_data_table.get_data(id) # this is a dictionary with the json
@@ -58,9 +61,9 @@ def submit_feedback():
     # return if the user does not exit (user_data would be empty)
     if not user_data:
         return jsonify({"result": False, "info": "This government ID does not exist."})
-    
-    # add the old latest feedback to the feedback_history
-    user_data["feedback_history"].append(user_data["latest_feedback"])
+
+    # append the current feedback over
+    user_data["feedback_history"].append(feedback)
 
     # ----- FEEDBACK FORMAT -----
     # {"feedback_history": [old -----> new]
@@ -83,8 +86,7 @@ def submit_bill():
     # submits a bill's feedback into the BILL database (Y/N)
     # to create a bill, use add_bill
     # INPUT (roughly)
-        # cookie data with id
-        # {"feedback": ..., "bill": ...}
+        # {"id": "...", "feedback": "...", "bill": "..."}
     # OUTPUT
         # {"result": True/False}
     id, feedback, bill = request.json['id'], request.json["feedback"], request.json["bill"]
@@ -136,7 +138,7 @@ def verify():
 def get_user_data():
     # gets the user data based on their id (given by json)
     # INPUT
-        # cookie id
+        # {"id": "..."}
     # OUTPUT
         # {"success": True, "data": {...}}
         # OR
@@ -154,6 +156,10 @@ def get_user_data():
 @app.route("/result/feedback", methods=["POST"])
 def feedback_results():
     # outputs the feedback to the user
+    # INPUT
+        # none
+    # OUTPUT
+        # 
     cur = database.conn.cursor()
     cur.execute(f"SELECT feedback FROM user_data2")
     rows = cur.fetchall() # rows is a list of tuples? each tuple stores a uesr
@@ -163,6 +169,7 @@ def feedback_results():
     for row in rows:
         if not row[0]["latest_feedback"] == "":
             feedbacks.append(row[0]["latest_feedback"])
+    # from proccessing.py
     response = jsonify(feedback.generate_feedback(feedbacks))
     return response
 
@@ -182,8 +189,7 @@ def add_bill():
     # get the title of the bill from the call and add it to the database
     # users can only create bills if they are an admin
     # INPUT 
-        # title = name of the bill
-        # text = description of the bill
+        # {"id": "..."}
     # OUTPUT
         # {"success": True/False}
 
