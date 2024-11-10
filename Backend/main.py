@@ -24,11 +24,7 @@ table = SimpleTable("user_data2", database, key="id", item="feedback")
 table.create_table()
 
 bills_table = SimpleTable("bill_data", database, key="bill", item="feedback")
-table.create_table()
-
-
-cur = database.conn.cursor()
-cur.execute(f"DROP TABLE user_data;")
+bills_table.create_table()
 
 feedback = Feedback(os.getenv("OPENAI_API_KEY"))
 bill = Bills()
@@ -60,15 +56,19 @@ def get_cookies():
         response = jsonify({"success": False})
     return response
 
-@app.route("/user_data", methods=["GET"])
+@app.route("/user_data", methods=["GET", "POST"])
 def get_user_data():
     id = request.cookies.get('id')
     user_data = table.get_data(id)
     if user_data:
-        return user_data
+        if request.method == "GET":
+            return user_data
+        else:
+            pass
     else:
         return jsonify({"success": False})
-    
+
+
 
 @app.route("/feedback", methods=["GET"])
 def feedback_endpoint():
