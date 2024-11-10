@@ -87,12 +87,12 @@ def submit_bill():
         # {"feedback": ..., "bill": ...}
     # OUTPUT
         # {"result": True/False}
-    user_id, feedback, bill = request.cookies.get('id'), request.json["feedback"], request.json["bill"]
+    id, feedback, bill = request.cookies.get('id'), request.json["feedback"], request.json["bill"]
 
     if not feedback in ["yes", "no"]:
         return jsonify({"success": False, "info": "Invalid response"})
     
-    user_data = user_data_table.get_data(user_id)
+    user_data = user_data_table.get_data(id)
     bill_data = bills_table.get_data(bill)
 
     if not bill_data:
@@ -101,7 +101,7 @@ def submit_bill():
     if not user_data:
         return jsonify({"result": False, "info": "Your government ID does not exist."})
     
-    if user_id in bill_data["feedback"]:
+    if id in bill_data["feedback"]:
         return jsonify({"result": False, "info": "You have already voted"})
     
     # update the latest
@@ -112,28 +112,21 @@ def submit_bill():
         latest_bill_changes.pop(0)
 
 
-    bill_data["feedback"][user_id] = feedback
+    bill_data["feedback"][id] = feedback
     bills_table.insert_data(bill, bill_data)
     return jsonify({"result": True, "info": "Success!"})
 
-
-@app.route("/get_cookie", methods=["POST"])
+@app.route("/verify", methods=["GET"])
 def get_cookies():
     # gets the id from the user and returns a cookie for them to use
     # INPUT
         # {"id": ...}
     # OUTPUT
         # {"success": True/False}
-    user_id = request.json["id"]
+    id = request.json["id"]
 
-    if user_data_table.get_data(user_id):
+    if user_data_table.get_data(id):
         response = jsonify({"success": True})
-        response.set_cookie('id', value=user_id, samesite="Lax", secure=True, httponly=True)
-        response.headers.add(
-            'Set-Cookie',
-            f'id={id}; HttpOnly; Secure; SameSite=None; Partitioned'
-        )
-
     else:
         response = jsonify({"success": False})
         
@@ -141,14 +134,14 @@ def get_cookies():
 
 @app.route("/user_data", methods=["GET"])
 def get_user_data():
-    # gets the user data based on their cookie id
+    # gets the user data based on their id (given by json)
     # INPUT
         # cookie id
     # OUTPUT
         # {"success": True, "data": {...}}
         # OR
         # {"success": False}
-    id = request.cookies.get('id')
+    id = request.json.get('id')
     user_data = user_data_table.get_data(id)
     
     if user_data:
@@ -194,8 +187,8 @@ def add_bill():
     # OUTPUT
         # {"success": True/False}
 
-    user_id = request.cookies.get('id')
-    user_data = user_data_table.get_data(user_id)
+    id = request.json.get('id')
+    user_data = user_data_table.get_data(id)
 
     if (user_data["admin"] == True):
         raw_json_data = request.json # gets the request data in the form of 
