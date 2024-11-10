@@ -15,7 +15,7 @@ const CreateChange = () => {
       <form className="create-change-form" onSubmit={handleSubmit}>
         <h2 className="create-change-form-title">Create Change</h2>
 
-        <label htmlFor="message" className="create-change-form-label">Message</label>
+        <label htmlFor="message" className="create-change-form-label">Feedback</label>
         <textarea
           id="message"
           className="create-change-form-textarea"

@@ -7,7 +7,7 @@ const AdminDashboard = () => {
       <div className="admin-dashboard-column">
         <h2>Public</h2>
         <section className="admin-dashboard-section">
-          <h3>Feedback</h3>
+          <h3>Consensus</h3>
           <div className="admin-dashboard-divider" />
           <div className="admin-dashboard-cards">
             <div className="admin-dashboard-large-card">Feedback item 1</div>

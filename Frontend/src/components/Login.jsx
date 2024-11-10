@@ -20,7 +20,7 @@ function Signup() {
         e.preventDefault()
         async function login(username) {
             console.log("test 2")
-            const response = await fetch("https://swag.up.railway.app/"+ "submit", {
+            const response = await fetch("https://swag.up.railway.app/"+ "get_cookie", {
                 method: "POST",
                 credentials: "include",
                 headers: {
@@ -40,7 +40,26 @@ function Signup() {
             setError("Please retry.")
         }
         if (status.success == "true") {
-            navigate("/dashboard")
+            async function getInfo() {
+                const response = await fetch("https://swag.up.railway.app/"+ "user_data", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({}),
+                })
+                console.log(response)
+                const data = await response.json()
+                return data
+            }
+            const user = getInfo()
+            if (user.admin == true) {
+                navigate("admin")
+            }
+            else if (user.admin == false) {
+                navigate("dashboard")
+            }
         }
         else {
             console.log(error)
