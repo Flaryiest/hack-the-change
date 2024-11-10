@@ -11,6 +11,15 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
+latest_bill_changes = []
+'''
+[\
+    {"title":"", "latest_feedback": ""},\
+    {"title":"", "latest_feedback": ""},\
+    {"title":"", "latest_feedback": ""}\
+    ]'''
+l_b_c_index = 0
+
 database = Database(
     DB_HOST=os.getenv("DB_HOST"),
     DB_PORT=os.getenv("DB_PORT"),
@@ -28,11 +37,6 @@ bills_table.create_table()
 feedback = Feedback(os.getenv("OPENAI_API_KEY"))
 #bill = Bills()
 
-latest_bill_changes = [\
-    {"title":"", "new_feedback": ""},\
-    {"title":"", "new_feedback": ""},\
-    {"title":"", "new_feedback": ""}\
-    ]
 
 '''
 for i in range(0, 10):
@@ -45,7 +49,7 @@ bills_table.insert_data("Daylight savings time", {"feedback": {}, "description":
 def submit_feedback():
     # this should be run along with submit bill
     # changes a user's feedback data
-    # NOTE: the 
+    # the bills that these are a part of are not stored ???
     id, feedback = request.json["id"], request.json["feedback"]
 
     user_data = user_data_table.get_data(id) # this is a dictionary with the json
@@ -76,19 +80,19 @@ def submit_feedback():
 
 @app.route("/bill/submit", methods=["POST"])
 def submit_bill():
-    # submits a bill's feedback into the database
+    # submits a bill's feedback into the BILL database (Y/N)
     # to create a bill, use add_bill
     # INPUT (roughly)
         # cookie data with id
         # {"feedback": ..., "bill": ...}
     # OUTPUT
         # {"result": True/False}
-    id, feedback, bill = request.cookies.get('id'), request.json["feedback"], request.json["bill"]
+    user_id, feedback, bill = request.cookies.get('id'), request.json["feedback"], request.json["bill"]
 
     if not feedback in ["yes", "no"]:
         return jsonify({"success": False, "info": "Invalid response"})
     
-    user_data = user_data_table.get_data(id)
+    user_data = user_data_table.get_data(user_id)
     bill_data = bills_table.get_data(bill)
 
     if not bill_data:
@@ -97,10 +101,18 @@ def submit_bill():
     if not user_data:
         return jsonify({"result": False, "info": "Your government ID does not exist."})
     
-    if id in bill_data["feedback"]:
+    if user_id in bill_data["feedback"]:
         return jsonify({"result": False, "info": "You have already voted"})
     
-    bill_data["feedback"][id] = feedback
+    # update the latest
+    latest_bill_changes.append({"title": bill_data["title"], "latest_feedback": feedback}) # update latest_bill_changes. This follows the same format as feedback
+
+    # remove the zero index element if the length is too big (default is 3)
+    if len(latest_bill_changes) > 3:
+        latest_bill_changes.pop(0)
+
+
+    bill_data["feedback"][user_id] = feedback
     bills_table.insert_data(bill, bill_data)
     return jsonify({"result": True, "info": "Success!"})
 
@@ -196,8 +208,12 @@ def add_bill():
 
 @app.route("/latest", methods=["GET"])
 def latest():
-    # gets the last three latest database edits
-    pass
+    # gets the last three latest bill database edits (only updates when submit_bill is run)
+    # INPUT
+        # none
+    # OUTPUT
+        # [{"title": "...", "latest_feedback": "..."}, ...] (dictionary in a list
+    return latest_bill_changes
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, threaded=True)
