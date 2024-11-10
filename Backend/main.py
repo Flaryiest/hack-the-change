@@ -75,9 +75,8 @@ def submit_bill():
 
     user_data["latest_feedback"] = feedback
     user_data_table.insert_data(id, {"latestfeedback": feedback})
-    response = jsonify({"result": True, "info": "Success!"})
+    return jsonify({"result": True, "info": "Success!"})
 
-    return response
 
 @app.route("/get_cookie", methods=["POST"])
 def get_cookies():
@@ -112,30 +111,19 @@ def feedback_results():
     feedbacks = []
 
     for row in rows:
-        feedbacks.append(row[0]["latest_feedback"])
-    print(feedbacks)
+        if not row[0]["latest_feedback"] == "":
+            feedbacks.append(row[0]["latest_feedback"])
     response = jsonify(feedback.generate_feedback(feedbacks))
     return response
 
 @app.route("/result/bills", methods=["GET"])
 def bills_result():
     cur = database.conn.cursor()
-    cur.execute(f"SELECT feedback FROM user_data2")
+    cur.execute("SELECT bill, feedback FROM bill_data")
     rows = cur.fetchall()
 
-    feedbacks = []
-
-    for row in rows:
-        feedbacks.append(row[0]["latest_feedback"])
-    print(feedbacks)
-    response = jsonify(feedback.generate_feedback(feedbacks))
-    return response
-
-# showing the bill data
-@app.route("/bills", methods=["GET"])
-def bill_endpoint():
-    cur = database.conn.cursor()
-    cur.execute(f"SELECT feedback FROM bill_data")
+    result = {row[0]: row[1] for row in rows}
+    return jsonify(result)
 
 @app.route("/add_bill", methods=["POST"])
 def add_bill():
@@ -157,7 +145,7 @@ def add_bill():
         bills_table.insert_data(raw_json_data["title"], {"feedback": [], "description": raw_json_data["text"]})
         response = jsonify({"success": True}) 
     else:
-        response = jsonify({"success": False})
+        response = jsonify({"success": False, "info": "you are not an admin"})
     return response
 
 if __name__ == "__main__":
