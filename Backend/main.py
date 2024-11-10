@@ -115,7 +115,7 @@ def add_bill():
     if (user_data["admin"] == True):
         raw_json_data = request.json # gets the request data in the form of 
             # a python dictionary
-        bills_table.insert_data(raw_json_data["title"], {"feedback": [], "description": raw_json_data["text"])
+        bills_table.insert_data(raw_json_data["title"], {"feedback": [], "description": raw_json_data["text"]})
         response = jsonify({"success": True}) 
     else:
         response = jsonify({"success": False})
