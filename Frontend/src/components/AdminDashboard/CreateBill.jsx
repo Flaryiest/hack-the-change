@@ -4,6 +4,7 @@ import '../../style/CreateChange.css'
 const CreateBill = () => {
   const [title, setTitle] = useState('')
   const [message, setMessage] = useState('')
+  const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId, feedback, setFeedback] = useOutletContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,12 +20,13 @@ const CreateBill = () => {
         headers: {
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({title: title, text: text}),
+        body: JSON.stringify({id: userId, text: title, description: message}),
     })
     console.log(response)
     const data = await response.json()
     console.log(data)
-    return data
+    triggerRender()
+
 }
 
   return (

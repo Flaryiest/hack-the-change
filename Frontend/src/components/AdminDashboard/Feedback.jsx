@@ -1,45 +1,37 @@
-import "../../style/Community.css"
-import { useState, useEffect } from "react"
+import "../../style/Community.css";
+import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom";
+
 const Feedback = () => {
-  const [feedbackData, setFeedbackData] = useState(null)
-  useEffect(() => {
-    async function getFeedback(title, text) {
-      const response = await fetch("https://swag.up.railway.app/"+ "add_bill", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify({title: title, text: text}),
-      })
-      console.log(response)
-      const data = await response.json()
-      console.log(data)
-      return data
-  }
-  }, [])
+  const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId, feedback, setFeedback] = useOutletContext();
 
   return (
     <div className="community-container">
       <section className="community-section">
         <h2>Feedback</h2>
         <div className="community-cards">
-          <div className="community-card">
-            <h3>Change Item 1</h3>
-            <p>This is a description of Change Item 1. Here you can include more details about this particular change.</p>
-          </div>
-          <div className="community-card">
-            <h3>Change Item 2</h3>
-            <p>This is a description of Change Item 2. Here you can include more details about this particular change.</p>
-          </div>
-          <div className="community-card">
-            <h3>Change Item 3</h3>
-            <p>This is a description of Change Item 3. Here you can include more details about this particular change.</p>
-          </div>
+          {/* Check if feedback is available */}
+          {feedback ? (
+            Object.entries(feedback).map(([feedbackText, feedbackResponses], index) => (
+              <div key={index} className="community-card">
+                <div className="feedback-section-header">{feedbackText}</div>
+                {/* Map through the responses for this feedback item */}
+                <div className="feedback-responses">
+                  {feedbackResponses.map((response, responseIndex) => (
+                    <p id="I-hate-everything" key={responseIndex}>{response}</p>
+                  ))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="community-card">
+              <p>Loading feedback...</p>
+            </div>
+          )}
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default Feedback
+export default Feedback;

@@ -97,3 +97,8 @@ button {
 button :hover {
   cursor: pointer;
 }
+
+#I-hate-everything {
+  font-size: 1em;
+  color: gray;
+}
