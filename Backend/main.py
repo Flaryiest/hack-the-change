@@ -108,17 +108,17 @@ def add_bill():
     # OUTPUT
         # {"success": True/False}
 
-    response = jsonify({"success": False})
 
     user_id = request.cookies.get('id')
-    user_data = user_data_table.get_data(id)
+    user_data = user_data_table.get_data(user_id)
 
     if (user_data["admin"] == True):
         raw_json_data = request.json # gets the request data in the form of 
             # a python dictionary
         bills_table.insert_data(raw_json_data["title"], {"feedback": [], "description": raw_json_data["text"])
         response = jsonify({"success": True}) 
-
+    else:
+        response = jsonify({"success": False})
     return response
 
 if __name__ == "__main__":
