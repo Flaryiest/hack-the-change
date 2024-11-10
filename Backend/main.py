@@ -61,9 +61,9 @@ def submit_feedback():
     # return if the user does not exit (user_data would be empty)
     if not user_data:
         return jsonify({"result": False, "info": "This government ID does not exist."})
-    
-    # add the old latest feedback to the feedback_history
-    user_data["feedback_history"].append(user_data["latest_feedback"])
+
+    # append the current feedback over
+    user_data["feedback_history"].append(feedback)
 
     # ----- FEEDBACK FORMAT -----
     # {"feedback_history": [old -----> new]
