@@ -45,7 +45,7 @@ def post():
     else:
         response = jsonify({"result": False, "info": "This government ID does not exist."})
 
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', "true")
     return response
 
 @app.route("/get_cookie", methods=["POST"])
@@ -59,7 +59,7 @@ def get_cookies():
     else:
         response = jsonify({"success": False})
         
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', 'true')
     return response
 
 @app.route("/user_data", methods=["GET", "POST"])
@@ -79,7 +79,7 @@ def get_user_data():
     else:
         response = jsonify({"success": False})
     
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', 'true')
     return response
 
 
@@ -96,7 +96,7 @@ def feedback_endpoint():
         feedbacks.append(row[0]["latest_feedback"])
     print(feedbacks)
     response = jsonify(feedback.generate_feedback(feedbacks))
-    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Origin', 'true')
     return response
 
 if __name__ == "__main__":
