@@ -85,7 +85,7 @@ def get_cookies():
 
     if user_data_table.get_data(id):
         response = jsonify({"success": True})
-        response.set_cookie('id', id)
+        response.set_cookie('id', id, samesite="None", secure=True)
     else:
         response = jsonify({"success": False})
         
