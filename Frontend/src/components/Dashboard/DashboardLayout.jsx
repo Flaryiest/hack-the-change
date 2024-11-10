@@ -84,6 +84,6 @@ export default function DashboardLayout() {
 
     return <div>
         <DashboardNavbar></DashboardNavbar>
-        <Outlet context={[userInfo, setUserInfo, bills, setBills, render, triggerRender, userId]}></Outlet>
+        <Outlet context={[userInfo, setUserInfo, bills, setBills, render, triggerRender, userId, feedback, setFeedback]}></Outlet>
     </div>
 }

@@ -4,7 +4,7 @@
     gap: 32px;
     padding: 20px;
     padding-top: 32px;
-    max-width: 1200px;
+    max-width: 800px;
     margin: auto;
     
   }
@@ -50,6 +50,10 @@
     margin: 20px 0;
   }
 
+  .bill-title {
+    font-weight: 700;
+
+  }
   @media (max-width: 600px) {
     .dashboard-container {
       padding: 10px;

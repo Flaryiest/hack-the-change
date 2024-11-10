@@ -11,7 +11,7 @@ const Dashboard = () => {
         <div className="dashboard-cards">
           {Object.entries(bills).slice(0, 2).map(([billName, billData], index) => (
             <div key={index} className="dashboard-card">
-              <h3>{billName}</h3>
+              <h3 className="bill-title">{billName}</h3>
               <p>{billData.description}</p>
               <div className="feedback-section">
               </div>

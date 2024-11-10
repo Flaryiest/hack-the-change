@@ -5,17 +5,32 @@ import { useOutletContext } from "react-router-dom";
 export default function Bills() {
     const [feedback, setFeedback] = useState({});
     const [showFeedback, setShowFeedback] = useState({});
-    const [userInfo, setUserInfo, bills, setBills, render, triggerRender] = useOutletContext();
+    const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId] = useOutletContext();
 
     const handleFeedbackChange = (id, e) => {
         setFeedback((prevFeedback) => ({
             ...prevFeedback,
             [id]: e.target.value,
         }));
+        
     };
 
     const handleFeedbackSubmit = async (id, e) => {
         e.preventDefault();
+        submitBillFeedback(id)
+    }
+    async function submitBillFeedback() {
+        const response = await fetch("https://swag.up.railway.app/"+ "bill/submit", {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({id: userId, bill: Object.keys(feedback)[0], feedback: feedback[Object.keys(feedback)[0]]})
+        })
+
+        const data = await response.json()
+        setUserInfo(data)
 
         if (feedback[id]?.trim()) {
             try {
