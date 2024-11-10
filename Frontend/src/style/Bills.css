@@ -1,0 +1,91 @@
+.bills-container {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    padding: 20px;
+    padding-top: 32px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.bills-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bills-section {
+    margin-bottom: 20px;
+    min-height: 150px;
+}
+
+.bills-section h3 {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.bills-divider {
+    width: 100%;
+    height: 2px;
+    background-color: rgb(144, 144, 144);
+    margin: 20px 0;
+}
+
+.bills-card-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.bills-small-card,
+.bills-large-card {
+    padding: 20px;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    color: #444;
+    transition: box-shadow 0.2s ease;
+    min-height: 180px;
+}
+
+.bills-small-card h4,
+.bills-large-card h4 {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 12px; 
+    color: #333;
+}
+
+
+.bills-small-card p,
+.bills-large-card p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+}
+
+.bills-small-card:hover,
+.bills-large-card:hover {
+    box-shadow: 0 6px 12px rgba(62, 62, 62, 0.15);
+}
+
+@media (max-width: 600px) {
+    .bills-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .bills-section h3 {
+        font-size: 1.3em;
+    }
+
+    .bills-small-card,
+    .bills-large-card {
+        font-size: 0.85em;
+    }
+}
