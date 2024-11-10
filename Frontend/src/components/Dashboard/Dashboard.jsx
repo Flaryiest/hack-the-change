@@ -1,5 +1,7 @@
 import "../../style/Dashboard.css"
+import { useOutletContext } from "react-router-dom"
 const Dashboard = () => {
+  const [userInfo, setUserInfo, render, triggerRender] = useOutletContext()
   return (
     <div className="dashboard-container">
       <section className="dashboard-section">

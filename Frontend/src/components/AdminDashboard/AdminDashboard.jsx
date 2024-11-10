@@ -1,6 +1,7 @@
 import "../../style/AdminDashboard.css";
-
+import { useOutletContext } from "react-router-dom";
 const AdminDashboard = () => {
+  const [userInfo, setUserInfo, render, triggerRender] = useOutletContext()
   return (
     <div className="admin-dashboard-container">
       <div className="admin-dashboard-column">

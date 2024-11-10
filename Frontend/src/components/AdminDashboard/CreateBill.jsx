@@ -12,7 +12,6 @@ const CreateBill = () => {
     setTitle('')
     await createBill(title, message)
   }
-
   async function createBill(title, text) {
     const response = await fetch("https://swag.up.railway.app/"+ "add_bill", {
         method: "POST",
