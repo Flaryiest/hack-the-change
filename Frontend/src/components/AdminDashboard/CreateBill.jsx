@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
-import '../../style/CreateChange.css';
+import React, { useState } from 'react'
+import '../../style/CreateChange.css'
 
 const CreateBill = () => {
-  const [title, setTitle] = useState('');
-  const [message, setMessage] = useState('');
+  const [title, setTitle] = useState('')
+  const [message, setMessage] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Form Submitted:", { message });
-    setMessage('');
-    setTitle('');
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    console.log("Form Submitted:", { message })
+    setMessage('')
+    setTitle('')
+    await createBill(title, message)
   }
+
+  async function createBill(title, text) {
+    const response = await fetch("https://swag.up.railway.app/"+ "add_bill", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({title: title, text: text}),
+    })
+    console.log(response)
+    const data = await response.json()
+    console.log(data)
+    return data
+}
 
   return (
     <div className="create-change-form-container">
