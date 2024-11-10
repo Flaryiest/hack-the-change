@@ -2,11 +2,18 @@ import serial
 
 # TODO: make functions that can be imported by another python program
 def init_serial(serial_port="COM3", serial_baudrate=9600, serial_timeout=None) :
-    return serial.Serial(
-        port = serial_port,
-        baudrate = serial_baudrate,
-        timeout = serial_timeout
-        )
+    '''initalizes a serial object. Returns 0 if there is no serial at the serial port
+        given'''
+    try:
+        ser = serial.Serial(
+            port = serial_port,
+            baudrate = serial_baudrate,
+            timeout = serial_timeout
+            )
+    except serial.serialutil.SerialException:
+        return 0
+
+    return ser
 
 def get_user_id(ser, serial_message_len=9) :
     '''reads a single 9 byte input from serial and outputs it as a string. ser is a serial.serial object'''
@@ -24,12 +31,20 @@ def close_serial(ser) :
     ser.close()
 # testing code (should work the same as the definitions
 if __name__ == "__main__":
-    ser = serial.Serial(
+    a = init_serial()
+    if a == 0:
+        print("no serial port")
+    else:
+        get_user_id(a)
+        close_serial(a)
+
+
+    '''ser = serial.Serial(
         port = "COM3",
         baudrate = 9600,
         timeout = None
         )
-    raw_input = b''
+    raw_input = b
 
     # read 10 bytes (9 ASCII chars and 1 '\0')
     # raw_input is a bytes (basically an integer array) now
@@ -39,7 +54,7 @@ if __name__ == "__main__":
     ser.close()
     
     # bytes are just integer arrays
-    '''
+    
     message = "Python is fun"
     byte1 = bytes(message, "utf-8")
 
