@@ -1,6 +1,6 @@
 import "../style/Login.css"
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState(false)
@@ -20,7 +20,7 @@ function Signup() {
         e.preventDefault()
         async function login(username) {
             console.log("test 2")
-            const response = await fetch("https://swag.up.railway.app/"+ "get_cookie", {
+            const response = await fetch("https://swag.up.railway.app/"+ "verify", {
                 method: "POST",
                 credentials: "include",
                 headers: {

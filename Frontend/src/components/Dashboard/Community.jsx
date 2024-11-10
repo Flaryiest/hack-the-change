@@ -16,8 +16,7 @@ export default function Bills() {
                     <div className="bill-response-card-group">
                         {Object.entries(bills).map(([billName, billData]) => (
                             <div key={billName} className="bill-response-large-card">
-                                <h4>{billName}</h4>
-                                <p>{billData.description}</p>
+                              <p className="feedback-response-large-card"></p>
                             </div>
                         ))}
                     </div>

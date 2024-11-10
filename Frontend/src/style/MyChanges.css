@@ -50,6 +50,26 @@
     box-shadow: 0 6px 12px rgba(62, 62, 62, 0.15);
 }
 
+.feedback-card-text {
+    font-weight: 500;
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+.feedback-response-large-card {
+    padding: 20px;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    color: var([--main-text-color]);
+    transition: box-shadow 0.2s ease;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 @media (max-width: 600px) {
     .my-changes-container {
         padding: 10px;

@@ -1,23 +1,33 @@
 import "../../style/MyChanges.css";
+import { useOutletContext } from "react-router-dom";
 
 const MyChanges = () => {
+    const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId] = useOutletContext();
+    const feedbackHistory = userInfo.feedback_history || [];
+
     return (
-      <div className="my-changes-container">
-        <section className="my-changes-section">
-          <h2>My Changes</h2>
-          <div className="my-changes-cards">
-            <div className="my-changes-card">
-              <p>This is a description of Change Item 1. Here you can include more details about this particular change.</p>
+        <div className="bill-response-container">
+            <div className="bill-response-column">
+                <section className="bill-response-section">
+                    <h3>My Feedback</h3>
+                    <div className="bill-response-divider" />
+
+                    <div className="bill-response-card-group">
+                        {feedbackHistory.length > 0 ? (
+                            feedbackHistory.map((feedback, index) => (
+                                <div key={index} className="feedback-response-large-card">
+                                    <div className="feedback-card-text">{feedback}</div>
+                                </div>
+                            ))
+                        ) : (
+                            <div className="bill-response-large-card">
+                                <h4>No feedback yet. Please provide some feedback.</h4>
+                            </div>
+                        )}
+                    </div>
+                </section>
             </div>
-            <div className="my-changes-card">
-              <p>This is a description of Change Item 2. Here you can include more details about this particular change.</p>
-            </div>
-            <div className="my-changes-card">
-              <p>This is a description of Change Item 3. Here you can include more details about this particular change.</p>
-            </div>
-          </div>
-        </section>
-      </div>
+        </div>
     )
 }
 

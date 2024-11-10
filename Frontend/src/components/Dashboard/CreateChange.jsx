@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import '../../style/CreateChange.css';
-
+import { useOutletContext } from "react-router-dom"
 const CreateChange = () => {
   const [message, setMessage] = useState('');
-
+  const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId] = useOutletContext()
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form Submitted:", { title, message });

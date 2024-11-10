@@ -1,6 +1,22 @@
 import "../../style/Bills.css";
-
+import { useState, useEffect } from "react";
+import { useOutletContext } from "react-router-dom"
 export default function Bills() {
+    const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId] = useOutletContext()
+    useEffect(() => {
+        fetch("https://swag.up.railway.app/result/bills")
+            .then((response) => response.json())
+            .then((data) => {
+                const formattedBills = Object.keys(data).map((billName) => ({
+                    billName,
+                    description: data[billName].description,
+                    feedback: data[billName].feedback,
+                }));
+                setBills(formattedBills);
+            })
+            .catch((error) => console.error("Error fetching bills data:", error));
+    }, []);
+
     return (
         <div className="bills-container">
             <div className="bills-column">
@@ -9,35 +25,18 @@ export default function Bills() {
                     <div className="bills-divider" />
 
                     <div className="bills-card-group">
-                        <div className="bills-small-card">
-                            <h4>Small Card 1 Title</h4>
-                            <p>This is a description for Small Card 1. You can add more details here about this bill or its contents.</p>
-                        </div>
-                        <div className="bills-small-card">
-                            <h4>Small Card 2 Title</h4>
-                            <p>This is a description for Small Card 2. You can add more details here about this bill or its contents.</p>
-                        </div>
-                    </div>
-                    <div className="bills-large-card">
-                        <h4>Large Card Title</h4>
-                        <p>This is a description for the Large Card. You can provide detailed information about this bill in the paragraph below.</p>
-                    </div>
-
-                    <div className="bills-divider" />
-
-                    <div className="bills-card-group">
-                        <div className="bills-small-card">
-                            <h4>Small Card 3 Title</h4>
-                            <p>This is a description for Small Card 3. You can add more details here about this bill or its contents.</p>
-                        </div>
-                        <div className="bills-small-card">
-                            <h4>Small Card 4 Title</h4>
-                            <p>This is a description for Small Card 4. You can add more details here about this bill or its contents.</p>
-                        </div>
-                    </div>
-                    <div className="bills-large-card">
-                        <h4>Large Card Title</h4>
-                        <p>This is a description for the Large Card. You can provide detailed information about this bill in the paragraph below.</p>
+                        {bills.map((bill, index) => (
+                            <div key={index}>
+                                <div className="bills-small-card">
+                                    <h4>{bill.billName}</h4>
+                                    <p>{bill.feedback}</p>
+                                </div>
+                                <div className="bills-large-card">
+                                    <h4>{bill.billName} Description</h4>
+                                    <p>{bill.description}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
                 </section>
             </div>
