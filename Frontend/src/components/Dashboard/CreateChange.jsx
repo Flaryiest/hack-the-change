@@ -1,13 +1,30 @@
 import React, { useState } from 'react';
 import '../../style/CreateChange.css';
-
+import { useOutletContext } from "react-router-dom"
 const CreateChange = () => {
   const [message, setMessage] = useState('');
-
-  const handleSubmit = (e) => {
+  const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId] = useOutletContext()
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", { title, message });
+    console.log("Form Submitted:", { message });
     setMessage('');
+    await createChange()
+  }
+  
+  async function createChange(userId) {
+    const response = await fetch("https://swag.up.railway.app/"+ "feedback/submit", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({id: String(userId), feedback: message}),
+  })
+  const data = await response.json()
+  if (data) {
+      console.log(data)
+      triggerRender()
+  }   
   }
 
   return (

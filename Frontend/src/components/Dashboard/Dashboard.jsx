@@ -1,10 +1,9 @@
 import "../../style/Dashboard.css"
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext, useParams } from "react-router-dom"
 
 const Dashboard = () => {
-  const [userInfo, setUserInfo, bills, setBills, render, triggerRender] = useOutletContext()
+  const [userInfo, setUserInfo, bills, setBills, render, triggerRender, userId] = useOutletContext()
   const feedbackHistory = userInfo.feedback_history || []
-
   return (
     <div className="dashboard-container">
       <section className="dashboard-section">
