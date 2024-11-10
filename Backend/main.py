@@ -24,11 +24,7 @@ table = SimpleTable("user_data2", database, key="id", item="feedback")
 table.create_table()
 
 bills_table = SimpleTable("bill_data", database, key="bill", item="feedback")
-table.create_table()
-
-
-cur = database.conn.cursor()
-cur.execute(f"DROP TABLE user_data;")
+bills_table.create_table()
 
 feedback = Feedback(os.getenv("OPENAI_API_KEY"))
 bill = Bills()
@@ -45,9 +41,12 @@ def post():
     id, feedback = request.json["id"], request.json["id"]
     if table.get_data(id):
         table.insert_data(id, {"feedback": feedback})
-        return jsonify({"result": True, "info": "Success!"})
+        response = jsonify({"result": True, "info": "Success!"})
     else:
-        return jsonify({"result": False, "info": "This government ID does not exist."})
+        response = jsonify({"result": False, "info": "This government ID does not exist."})
+
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route("/get_cookie", methods=["POST"])
 def get_cookies():
@@ -58,17 +57,29 @@ def get_cookies():
         response.set_cookie('id', id)
     else:
         response = jsonify({"success": False})
+        
+    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-@app.route("/user_data", methods=["GET"])
+@app.route("/user_data", methods=["GET", "POST"])
 def get_user_data():
     id = request.cookies.get('id')
+    data = request.json
     user_data = table.get_data(id)
-    if user_data:
-        return user_data
-    else:
-        return jsonify({"success": False})
     
+    if user_data:
+        if request.method == "GET":
+            return user_data
+        else:
+            data["admin"] = user_data["admin"]
+            table.insert_data(id, data)
+            response = jsonify({"success": True})
+    else:
+        response = jsonify({"success": False})
+    
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
+
 
 @app.route("/feedback", methods=["GET"])
 def feedback_endpoint():
@@ -81,11 +92,9 @@ def feedback_endpoint():
     for row in rows:
         feedbacks.append(row[0]["latest_feedback"])
     print(feedbacks)
-    return jsonify(feedback.generate_feedback(feedbacks))
-
-@app.route("/login")
-def login():
-    pass
+    response = jsonify(feedback.generate_feedback(feedbacks))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=3333, threaded=True)
