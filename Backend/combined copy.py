@@ -1,7 +1,9 @@
 import cv2
+import serial
 import pytesseract
 import numpy as np
 import requests
+import serial_reader
 
 requests.post("https://swag.up.railway.app/submit", json={"id": "the persons id", "feedback": "the persons feedback"})
 
@@ -33,37 +35,12 @@ def perform_ocr(preprocessed_image):
 
     return text
 
-import serial
-
-def init_serial(serial_port="/dev/cu.usbmodem141301", serial_baudrate=9600, serial_timeout=None) :
-    return serial.Serial(
-        port = serial_port,
-        baudrate = serial_baudrate,
-        timeout = serial_timeout
-        )
-
-def get_user_id(ser, serial_message_len=9) :
-    '''reads a single 9 byte input from serial and outputs it as a string. ser is a serial.serial object'''
-
-    raw_input = b'' # set raw_input as a bytes
-
-    # NOTE: assumes that all the user id's have serial_message_len length
-    raw_input += ser.read(serial_message_len)
-
-    return raw_input.decode("utf-8")
-
-
-def close_serial(ser) :
-    '''closes ser as a serial object'''
-    ser.close()
-
-
-a = init_serial()
+a = serial_reader.init_serial()
 
 print("enter id!")
 
-gov_ID_num = get_user_id(a)
-close_serial(a)
+gov_ID_num = serial_reader.get_user_id(a)
+serial_reader.close_serial(a)
 
 input("Press Enter to continue...")
 
