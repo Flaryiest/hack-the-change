@@ -12,6 +12,7 @@ export default function DashboardNavbar() {
             </div>
             <div className="navbar-right">
                 <ul className="navbar-right-links">
+                <li className="navbar-link"><Link className="navbar-right-link-text" to="dashboard/bills">Bills</Link></li>
                     <li className="navbar-link"><Link className="navbar-right-link-text" to="dashboard/community">Community Changes</Link></li>
                 </ul>
                 <Link to="login" className="navbar-login"><button className="navbar-button">Log Out</button></Link>
