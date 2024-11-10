@@ -32,10 +32,11 @@
     background-color: #fefefe;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-size: 0.9em;
-    color: #444;
+    font-size: 1.1em;
+    color: var(--main-text-color);
     transition: box-shadow 0.2s ease;
     min-height: 120px;
+    line-height: 1.5;
   }
   
   .dashboard-card:hover {

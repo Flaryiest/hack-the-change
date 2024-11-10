@@ -1,6 +1,7 @@
 import "../../style/Community.css";
-
+import { useOutletContext } from "react-router-dom"
 const Community = () => {
+  const [userInfo, setUserInfo, bills, setBills, render, triggerRender] = useOutletContext()
     return (
       <div className="community-container">
         <section className="community-section">
