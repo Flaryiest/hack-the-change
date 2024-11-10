@@ -50,7 +50,7 @@ def submit_feedback():
         user_data["feedback_history"].pop(0)
 
     user_data["latest_feedback"] = feedback
-    user_data_table.insert_data(id, {"latestfeedback": feedback})
+    user_data_table.insert_data(id, user_data)
 
     return jsonify({"result": True, "info": "Success!"})
 
@@ -85,7 +85,16 @@ def get_cookies():
 
     if user_data_table.get_data(id):
         response = jsonify({"success": True})
+<<<<<<< Updated upstream
         response.set_cookie('id', id, samesite="None", secure=True)
+=======
+        response.set_cookie('id', id, samesite="None", secure=True, httponly=True)
+        response.headers.add(
+            'Set-Cookie',
+            f'id={id}; HttpOnly; Secure; SameSite=None; Partitioned'
+        )
+
+>>>>>>> Stashed changes
     else:
         response = jsonify({"success": False})
         
