@@ -2,7 +2,7 @@ from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
 #from transformers import pipeline
-
+#bertopic>=0.16.4
 
 class Feedback:
     def __init__(self, api_key):
