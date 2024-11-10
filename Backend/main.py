@@ -39,8 +39,8 @@ bills_table.insert_data("Daylight savings time", {"feedback": [], "description":
 @app.route("/submit", methods=["POST"])
 def post():
     id, feedback = request.json["id"], request.json["feedback"]
-    if table.get_data(id):
-        table.insert_data(id, {"feedback": feedback})
+    if user_data_table.get_data(id):
+        user_data_table.insert_data(id, {"feedback": feedback})
         response = jsonify({"result": True, "info": "Success!"})
     else:
         response = jsonify({"result": False, "info": "This government ID does not exist."})
