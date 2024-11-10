@@ -2,7 +2,7 @@
     # modified to run on psycopg version 3
 import psycopg, json
 
-class DataType:
+class DataType: 
     class Integer:
         def __init__(self, name:str):
             self.name = name

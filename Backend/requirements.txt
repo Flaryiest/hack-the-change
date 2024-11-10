@@ -5,3 +5,7 @@ psycopg[binary]>=3.2.3
 python-dotenv>=1.0.1
 Flask-Cors>=5.0.0
 numpy>=1.17.3
+bertopic>=0.16.4
+sentence_transformers>= 3.2.1
+openai>=1.54.3
+transformers>=4.46.2
