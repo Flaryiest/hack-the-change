@@ -116,7 +116,7 @@ def submit_bill():
     bills_table.insert_data(bill, bill_data)
     return jsonify({"result": True, "info": "Success!"})
 
-@app.route("/verify", methods=["GET"])
+@app.route("/verify", methods=["POST"])
 def get_cookies():
     # gets the id from the user and returns a cookie for them to use
     # INPUT
@@ -132,7 +132,7 @@ def get_cookies():
         
     return response
 
-@app.route("/user_data", methods=["GET"])
+@app.route("/user_data", methods=["POST"])
 def get_user_data():
     # gets the user data based on their id (given by json)
     # INPUT
@@ -151,7 +151,7 @@ def get_user_data():
     return response
 
 
-@app.route("/result/feedback", methods=["GET"])
+@app.route("/result/feedback", methods=["POST"])
 def feedback_results():
     # outputs the feedback to the user
     cur = database.conn.cursor()
@@ -166,7 +166,7 @@ def feedback_results():
     response = jsonify(feedback.generate_feedback(feedbacks))
     return response
 
-@app.route("/result/bills", methods=["GET"])
+@app.route("/result/bills", methods=["POST"])
 def bills_result():
 
     cur = database.conn.cursor()
@@ -199,7 +199,7 @@ def add_bill():
         response = jsonify({"success": False, "info": "you are not an admin"})
     return response
 
-@app.route("/latest", methods=["GET"])
+@app.route("/latest", methods=["POST"])
 def latest():
     # gets the last three latest bill database edits (only updates when submit_bill is run)
     # INPUT
