@@ -32,6 +32,9 @@ Keypad customKeypad = Keypad(makeKeymap(hexaKeys), rowPins, colPins, ROWS, COLS)
 char id_number[10]; // 10 characters + null terminator
 int index = 0;
 
+char bill_key = '\0';
+String bill = "";
+
 
 void setup() {
   Serial.begin(9600);
@@ -90,6 +93,45 @@ void setup() {
   lcd.clear();
 
   lcd.print("Send Success!");
+
+  while (!customKeypad.getKey()) {
+    // Loop until a key is pressed
+  }
+
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("DaylightSavings?");
+  lcd.setCursor(0, 1);
+  lcd.print("A: Yes  B: No");
+  //BILL BELOW
+  
+  // Wait until a key is pressed
+  while (!bill_key) {
+    bill_key = customKeypad.getKey();
+  }
+  
+  // Check the key value and set 'bill' accordingly
+  if (bill_key == 'A') {
+    bill = "Yes";
+  } else if (bill_key == 'B') {
+    bill = "No.";
+  }
+
+  Serial.print(bill);
+
+  // Display the result on the LCD
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Recorded Vote: ");
+  lcd.setCursor(0, 1);
+  lcd.print(bill);
+
+  while (!customKeypad.getKey()) {
+    // Loop until a key is pressed
+  }
+
+  lcd.clear();
+  lcd.print("Thank you!");
 }
 
 void loop()
