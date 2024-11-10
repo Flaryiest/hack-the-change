@@ -9,7 +9,7 @@ class Feedback:
         self.embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
         self.model = BERTopic(embedding_model=self.embedding_model, min_topic_size=2)
         self.client = OpenAI(api_key=api_key)
-
+ 
     def generate_feedback(self, feedback):
         topics, _ = self.model.fit_transform(feedback)
         topic_info = self.model.get_topic_info()
