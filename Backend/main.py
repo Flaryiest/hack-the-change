@@ -9,7 +9,7 @@ load_dotenv()
 
 # note: ALL api calls are all in json
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://hack-the-change.pages.dev"}}, supports_credentials=True)
+CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
 
 database = Database(
     DB_HOST=os.getenv("DB_HOST"),
