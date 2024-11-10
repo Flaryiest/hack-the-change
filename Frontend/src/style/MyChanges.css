@@ -20,7 +20,7 @@
 
 .my-changes-cards {
     display: grid;
-    grid-template-columns: 1fr; /* One card per row */
+    grid-template-columns: 1fr;
     gap: 30px;
 }
 
@@ -30,7 +30,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-size: 1em;
-    color: #444;
+    color: var(--main-text-color);
     transition: box-shadow 0.2s ease;
     min-height: 250px;
 }
@@ -41,8 +41,8 @@
 }
 
 .my-changes-card p {
-    font-size: 1em;
-    color: #666;
+    font-size: 1.2em;
+    color: var(--main-text-color);
     line-height: 1.6;
 }
 
