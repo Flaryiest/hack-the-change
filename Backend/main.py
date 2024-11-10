@@ -85,16 +85,12 @@ def get_cookies():
 
     if user_data_table.get_data(id):
         response = jsonify({"success": True})
-<<<<<<< Updated upstream
-        response.set_cookie('id', id, samesite="None", secure=True)
-=======
         response.set_cookie('id', id, samesite="None", secure=True, httponly=True)
         response.headers.add(
             'Set-Cookie',
             f'id={id}; HttpOnly; Secure; SameSite=None; Partitioned'
         )
 
->>>>>>> Stashed changes
     else:
         response = jsonify({"success": False})
         
