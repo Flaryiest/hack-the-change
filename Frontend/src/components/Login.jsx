@@ -18,8 +18,58 @@ function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        navigate("/dashboard")
+        async function login(username) {
+            console.log("test 2")
+            const response = await fetch("https://swag.up.railway.app/"+ "get_cookie", {
+                method: "POST",
+                credentials: "include",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({id: username}),
+            })
+            console.log(response)
+            const data = await response.json()
+            console.log(data)
+            return data
+        }
+        
+        const status = await login(formData.username)
+        if (!(status)) {
+            console.log(error)
+            setError("Please retry.")
+        }
+        if (status.success == "true") {
+            async function getInfo() {
+                const response = await fetch("https://swag.up.railway.app/"+ "user_data", {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({}),
+                })
+                console.log(response)
+                const data = await response.json()
+                return data
+            }
+            const user = getInfo()
+            if (user.admin == true) {
+                navigate("admin")
+            }
+            else if (user.admin == false) {
+                navigate("dashboard")
+            }
+        }
+        else {
+            console.log(error)
+            setError("Please retry.")
+        }
+        
     }
+
+
+        
 
 
     return <div className="signup-page">

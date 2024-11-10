@@ -1,0 +1,126 @@
+.bill-response-container {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    padding: 20px;
+    padding-top: 32px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.bill-response-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.bill-response-section {
+    margin-bottom: 20px;
+    min-height: 150px;
+}
+
+.bill-response-section h3 {
+    font-size: 1.5em;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #333;
+}
+
+.bill-response-divider {
+    width: 100%;
+    height: 2px;
+    background-color: rgb(144, 144, 144);
+    margin: 20px 0;
+}
+
+.bill-response-card-group {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    flex-direction: column;
+}
+
+.bill-response-small-card,
+.bill-response-large-card {
+    padding: 20px;
+    background-color: #fefefe;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    color: #444;
+    transition: box-shadow 0.2s ease;
+    min-height: 220px;
+}
+
+.bill-response-small-card h4,
+.bill-response-large-card h4 {
+    font-size: 1.2em;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #333;
+}
+
+.bill-response-small-card p,
+.bill-response-large-card p {
+    font-size: 1em;
+    color: #666;
+    line-height: 1.6;
+}
+
+.bill-response-small-card:hover,
+.bill-response-large-card:hover {
+    box-shadow: 0 6px 12px rgba(62, 62, 62, 0.15);
+}
+
+.bill-response-feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.bill-response-feedback-form label {
+    font-size: 1em;
+    color: #444;
+}
+
+.bill-response-feedback-form input[type="radio"] {
+    margin-right: 10px;
+}
+
+.bill-response-feedback-submit {
+    padding: 8px 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+}
+
+.bill-response-feedback-submit:hover {
+    background-color: #0056b3;
+}
+.give-feedback {
+    margin-top: 16px;
+}
+
+
+@media (max-width: 600px) {
+    .bill-response-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+    }
+
+    .bill-response-section h3 {
+        font-size: 1.3em;
+    }
+
+    .bill-response-small-card,
+    .bill-response-large-card {
+        font-size: 0.85em;
+    }
+}

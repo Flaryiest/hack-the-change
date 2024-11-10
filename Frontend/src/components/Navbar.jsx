@@ -6,8 +6,8 @@ export default function Navbar() {
             <div className="navbar-left">
                 <div className="navbar-header"><Link to="">ChangePod</Link></div>
                 <ul className="navbar-left-links">
-                    <li className="navbar-link"><Link className="navbar-left-link-text-" to="">Product</Link></li>
-                    <li className="navbar-link"><Link className="navbar-left-link-text" to="">Solution</Link></li>
+                    <li className="navbar-link"><Link className="navbar-left-link-text" to="mission">Mission</Link></li>
+                    <li className="navbar-link"><Link className="navbar-left-link-text" to="solution">Solution</Link></li>
                 </ul>
             </div>
             <div className="navbar-right">
