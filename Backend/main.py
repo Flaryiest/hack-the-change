@@ -1,17 +1,16 @@
 from flask import Flask, request, jsonify, make_response
 from postgrelib import SimpleTable, Database
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
-from processing import Feedback, Bills
+from processing import Feedback
 import os, random, json
 
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-CORS(app, supports_credentials=True)
 database = Database(
     DB_HOST=os.getenv("DB_HOST"),
     DB_PORT=os.getenv("DB_PORT"),
@@ -27,7 +26,7 @@ bills_table = SimpleTable("bill_data", database, key="bill", item="feedback")
 bills_table.create_table()
 
 feedback = Feedback(os.getenv("OPENAI_API_KEY"))
-bill = Bills()
+#bill = Bills()
 
 '''
 for i in range(0, 10):
@@ -37,6 +36,7 @@ bills_table.insert_data("Daylight savings time", {"feedback": [], "description":
 
 
 @app.route("/submit", methods=["POST"])
+@cross_origin()
 def post():
     id, feedback = request.json["id"], request.json["id"]
     if table.get_data(id):
@@ -49,6 +49,7 @@ def post():
     return response
 
 @app.route("/get_cookie", methods=["POST"])
+@cross_origin()
 def get_cookies():
     id = request.json["id"]
 
@@ -62,6 +63,7 @@ def get_cookies():
     return response
 
 @app.route("/user_data", methods=["GET", "POST"])
+@cross_origin()
 def get_user_data():
     id = request.cookies.get('id')
     data = request.json
@@ -82,6 +84,7 @@ def get_user_data():
 
 
 @app.route("/feedback", methods=["GET"])
+@cross_origin()
 def feedback_endpoint():
     cur = database.conn.cursor()
     cur.execute(f"SELECT feedback FROM user_data2")

@@ -1,7 +1,7 @@
 from bertopic import BERTopic
 from sentence_transformers import SentenceTransformer
 from openai import OpenAI
-from transformers import pipeline
+#from transformers import pipeline
 
 
 class Feedback:
@@ -34,7 +34,7 @@ class Feedback:
             result[chat_completion.choices[0].message.content] = theme_feedback[:10]
 
         return result
-    
+    '''
 class Bills:
     def __init__(self):
         self.classifier = pipeline("zero-shot-classification")
@@ -50,7 +50,7 @@ class Bills:
                 results.append("no")  # If feedback is empty, classify as "no" or handle as needed
 
         return {"n_yes": results.count("yes"), "n_no": results.count("no"), "n": len(results)}
-    
+    '''
 '''
 feedbacks = """The buses are often late and unreliable.
 The new recycling program is very effective
