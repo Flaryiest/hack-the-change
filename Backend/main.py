@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 from postgrelib import SimpleTable, Database
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
-
+from processing import Feedback, Bills
 import os, random, json
 
 load_dotenv()
@@ -22,6 +22,9 @@ database = Database(
 table = SimpleTable("user_data", database, key="id", item="feedback")
 table.create_table()
 
+feedback = Feedback(os.getenv("OPENAI_API_KEY"))
+bill = Bills()
+
 '''
 for i in range(0, 10):
     table.insert_data("".join([str(random.randint(0, 9)) for i in range(0, 10)]), {"latest_feedback": "", "feedback_history": [], "admin": True, "latest_bill": "", "bill_history": []})
@@ -35,29 +38,19 @@ def post():
     else:
         return jsonify({"result": False, "info": "This government ID does not exist."})
 
+
 @app.route("/feedback", methods=["GET"])
-def results():
-    cur = database.conn.cursor()  # Get a cursor directly from the connection
+def feedback_endpoint():
+    cur = database.conn.cursor()
     cur.execute(f"SELECT feedback FROM user_data")
     rows = cur.fetchall()
 
     feedbacks = []
 
     for row in rows:
-        feedbacks.append(row[0])  # Assuming the column is a JSON string
+        feedbacks.append(row[0]["latest_feedback"])
     print(feedbacks)
-
-@app.route("/feedback", methods=["GET"])
-def feedback():
-    cur = database.conn.cursor()
-    cur.execute("SELECT your_column FROM your_table")
-    rows = cur.fetchall()
-
-    feedbacks = []
-
-    for row in rows:
-        feedbacks.append(json.loads(row[0]))
-    print(feedbacks)
+    return jsonify(feedback.generate_feedback(feedbacks))
 
 @app.route("/login")
 def login():
