@@ -87,7 +87,7 @@ def submit_bill():
         # {"feedback": ..., "bill": ...}
     # OUTPUT
         # {"result": True/False}
-    id, feedback, bill = request.cookies.get('id'), request.json["feedback"], request.json["bill"]
+    id, feedback, bill = request.json['id'], request.json["feedback"], request.json["bill"]
 
     if not feedback in ["yes", "no"]:
         return jsonify({"success": False, "info": "Invalid response"})
@@ -117,7 +117,7 @@ def submit_bill():
     return jsonify({"result": True, "info": "Success!"})
 
 @app.route("/verify", methods=["POST"])
-def get_cookies():
+def verify():
     # gets the id from the user and returns a cookie for them to use
     # INPUT
         # {"id": ...}
