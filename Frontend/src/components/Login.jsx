@@ -19,27 +19,24 @@ function Signup() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         async function login(username) {
-            console.log("test 2")
             const response = await fetch("https://swag.up.railway.app/"+ "verify", {
                 method: "POST",
                 credentials: "include",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({id: username}),
+                body: JSON.stringify({id: formData.username}),
             })
-            console.log(response)
+            console.log(formData.username)
             const data = await response.json()
             console.log(data)
             return data
         }
-        
+      
         const status = await login(formData.username)
-        if (!(status)) {
-            console.log(error)
-            setError("Please retry.")
-        }
-        if (status.success == "true") {
+        console.log(status)
+        if (status.success == true) {
+            console.log("yes")
             async function getInfo() {
                 const response = await fetch("https://swag.up.railway.app/"+ "user_data", {
                     method: "POST",
@@ -47,18 +44,18 @@ function Signup() {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    body: JSON.stringify({}),
+                    body: JSON.stringify({id: formData.username}),
                 })
                 console.log(response)
                 const data = await response.json()
-                return data
+                return data.data
             }
-            const user = getInfo()
+            const user = await getInfo()
             if (user.admin == true) {
-                navigate("admin")
+                navigate("/admin/" + formData.username)
             }
             else if (user.admin == false) {
-                navigate("dashboard")
+                navigate("/dashboard/" + formData.username)
             }
         }
         else {
@@ -87,6 +84,7 @@ function Signup() {
                 <button className="sign">Login</button>
             </form>
                 <div className="signup-line"></div>
+                <div className="social-message">Demo User ID: 123567898</div>
         </div>
     </div>
     
