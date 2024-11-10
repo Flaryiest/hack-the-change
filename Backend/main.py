@@ -57,7 +57,7 @@ def submit_feedback():
 
 @app.route("/bill/submit", methods=["POST"])
 def submit_bill():
-    id, feedback, bill = request.cookies.get('id'), request.json["feedback"], request.json["bill"]
+    id, feedback, bill = request.json.get('id'), request.json["feedback"], request.json["bill"]
 
     if not feedback in ["yes", "no"]:
         return jsonify({"success": False, "info": "Invalid response"})
@@ -78,14 +78,14 @@ def submit_bill():
     bills_table.insert_data(bill, bill_data)
     return jsonify({"result": True, "info": "Success!"})
 
-
-@app.route("/get_cookie", methods=["POST"])
+'''
+@app.route("/get_cookie", methods=["GET"])
 def get_cookies():
     id = request.json["id"]
 
     if user_data_table.get_data(id):
         response = jsonify({"success": True})
-        response.set_cookie('id', value=id, samesite="Lax", secure=True, httponly=True)
+        response.set_cookie('id', value=id, samesite="None", secure=True, httponly=True)
         response.headers.add(
             'Set-Cookie',
             f'id={id}; HttpOnly; Secure; SameSite=None; Partitioned'
@@ -95,10 +95,10 @@ def get_cookies():
         response = jsonify({"success": False})
         
     return response
-
+'''
 @app.route("/user_data", methods=["GET"])
 def get_user_data():
-    id = request.cookies.get('id')
+    id = request.json.get('id')
     user_data = user_data_table.get_data(id)
     
     if user_data:
@@ -143,8 +143,8 @@ def add_bill():
         # {"success": True/False}
 
 
-    user_id = request.cookies.get('id')
-    user_data = user_data_table.get_data(user_id)
+    id = request.json.get('id')
+    user_data = user_data_table.get_data(id)
 
     if (user_data["admin"] == True):
         raw_json_data = request.json # gets the request data in the form of 
