@@ -86,7 +86,7 @@ def submit_bill():
     # submits a bill's feedback into the BILL database (Y/N)
     # to create a bill, use add_bill
     # INPUT (roughly)
-        # {"id": ..., "feedback": ..., "bill": ...}
+        # {"id": "...", "feedback": "...", "bill": "..."}
     # OUTPUT
         # {"result": True/False}
     id, feedback, bill = request.json['id'], request.json["feedback"], request.json["bill"]
