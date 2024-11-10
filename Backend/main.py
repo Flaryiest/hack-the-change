@@ -32,18 +32,50 @@ feedback = Feedback(os.getenv("OPENAI_API_KEY"))
 for i in range(0, 10):
     user_data_table.insert_data("".join([str(random.randint(0, 9)) for i in range(0, 10)]), {"latest_feedback": "", "feedback_history": [], "admin": True})
 '''
-# an example for inserting data into the db
-bills_table.insert_data("Daylight savings time", {"feedback": [], "description": "City proposal to abolish daylight saving."})
+bills_table.insert_data("Daylight savings time", {"feedback": {}, "description": "City proposal to abolish daylight saving."})
 
 
-@app.route("/submit", methods=["POST"])
-def post():
+@app.route("/feedback/submit", methods=["POST"])
+def submit_feedback():
     id, feedback = request.json["id"], request.json["feedback"]
-    if user_data_table.get_data(id):
-        user_data_table.insert_data(id, {"feedback": feedback})
-        response = jsonify({"result": True, "info": "Success!"})
-    else:
-        response = jsonify({"result": False, "info": "This government ID does not exist."})
+
+    user_data = user_data_table.get_data(id)
+
+    if not user_data:
+        return jsonify({"result": False, "info": "This government ID does not exist."})
+    
+    user_data["feedback_history"].append(user_data["latest_feedback"])
+
+    if len(user_data["feedback_history"]) > 10:
+        user_data["feedback_history"].pop(0)
+
+    user_data["latest_feedback"] = feedback
+    user_data_table.insert_data(id, {"latestfeedback": feedback})
+
+    return jsonify({"result": True, "info": "Success!"})
+
+
+@app.route("/bill/submit", methods=["POST"])
+def submit_bill():
+    id, feedback, bill = request.cookies.get('id'), request.json["feedback"], request.json["bill"]
+
+    user_data = user_data_table.get_data(id)
+    bill_data = bills_table.get_data(bill)
+
+    if not bill_data:
+        return jsonify({"result": False, "info": "This bill does not exist"})
+
+    if not user_data:
+        return jsonify({"result": False, "info": "Your government ID does not exist."})
+    
+    user_data["feedback_history"].append(user_data["latest_feedback"])
+
+    if len(user_data["feedback_history"]) > 10:
+        user_data["feedback_history"].pop(0)
+
+    user_data["latest_feedback"] = feedback
+    user_data_table.insert_data(id, {"latestfeedback": feedback})
+    response = jsonify({"result": True, "info": "Success!"})
 
     return response
 
@@ -51,7 +83,7 @@ def post():
 def get_cookies():
     id = request.json["id"]
 
-    if id in user_data_table.get_data():
+    if user_data_table.get_data(id):
         response = jsonify({"success": True})
         response.set_cookie('id', id)
     else:
@@ -59,27 +91,34 @@ def get_cookies():
         
     return response
 
-@app.route("/user_data", methods=["GET", "POST"])
+@app.route("/user_data", methods=["GET"])
 def get_user_data():
     id = request.cookies.get('id')
-    data = request.json
     user_data = user_data_table.get_data(id)
     
     if user_data:
-        if request.method == "GET":
-            return user_data
-        else:
-            data["admin"] = user_data["admin"]
-            user_data_table.insert_data(id, data)
-            response = jsonify({"success": True})
+        return jsonify({"success": True, "data": user_data})
     else:
         response = jsonify({"success": False})
-    
     return response
 
 
-@app.route("/feedback", methods=["GET"])
-def feedback_endpoint():
+@app.route("/result/feedback", methods=["GET"])
+def feedback_results():
+    cur = database.conn.cursor()
+    cur.execute(f"SELECT feedback FROM user_data2")
+    rows = cur.fetchall()
+
+    feedbacks = []
+
+    for row in rows:
+        feedbacks.append(row[0]["latest_feedback"])
+    print(feedbacks)
+    response = jsonify(feedback.generate_feedback(feedbacks))
+    return response
+
+@app.route("/result/bills", methods=["GET"])
+def bills_result():
     cur = database.conn.cursor()
     cur.execute(f"SELECT feedback FROM user_data2")
     rows = cur.fetchall()
