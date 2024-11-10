@@ -78,24 +78,17 @@ def submit_bill():
     bills_table.insert_data(bill, bill_data)
     return jsonify({"result": True, "info": "Success!"})
 
-'''
-@app.route("/get_cookie", methods=["GET"])
+@app.route("/verify", methods=["GET"])
 def get_cookies():
     id = request.json["id"]
 
     if user_data_table.get_data(id):
         response = jsonify({"success": True})
-        response.set_cookie('id', value=id, samesite="None", secure=True, httponly=True)
-        response.headers.add(
-            'Set-Cookie',
-            f'id={id}; HttpOnly; Secure; SameSite=None; Partitioned'
-        )
-
     else:
         response = jsonify({"success": False})
         
     return response
-'''
+
 @app.route("/user_data", methods=["GET"])
 def get_user_data():
     id = request.json.get('id')
