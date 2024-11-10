@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import '../../style/CreateChange.css';
 
 const CreateBill = () => {
-  const [title, setTitle] = useState('');
   const [message, setMessage] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Form Submitted:", { title, message });
-    setTitle('');
+    console.log("Form Submitted:", { message });
     setMessage('');
   }
 
@@ -16,17 +14,6 @@ const CreateBill = () => {
     <div className="create-change-form-container">
       <form className="create-change-form" onSubmit={handleSubmit}>
         <h2 className="create-change-form-title">Create Bill</h2>
-
-        <label htmlFor="title" className="create-change-form-label">Title</label>
-        <input
-          type="text"
-          id="title"
-          className="create-change-form-input"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Enter title"
-          required
-        />
 
         <label htmlFor="message" className="create-change-form-label">Message</label>
         <textarea
