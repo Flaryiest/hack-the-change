@@ -4,7 +4,8 @@ import { useState, useEffect } from "react"
 export default function DashboardLayout() {
     const { userid } = useParams()
     const [userId, setUserId] = useState(userid)
-    const [userInfo, setUserInfo] = useState({latest_feedback : "Education is for the weak", feedback_history: ['Education is for the weak', 'What daylight is there to save when there is only darkness for our future', 'Books are a vector for misinformation, so they must be censored when needed', 'Animal Dissection is useful for people to know what they are up against in the medical field'], admin: false})
+    const [userInfo, setUserInfo] = useState({latest_feedback : "More CTrain frequency", feedback_history: ["I always miss the bus",
+      "More CTrain frequency"], admin: false})
     const [feedback, setFeedback] = useState(null)
     const [bills, setBills] = useState({})
     const [render, setRender] = useState(0)
